@@ -1,0 +1,28 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:regular,700,900&display=swap);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+      -webkit-tap-highlight-color: transparent;
+    }
+  body {
+    @apply w-full h-full overflow-x-hidden font-roboto font-normal text-white text-base
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply flex justify-center items-center py-[11px] bg-primary text-white border-none outline-none font-bold rounded-full mt-5 duration-300
+  }
+}
+
+body {
+  background: linear-gradient(230deg, #4E9FDD 12.87%, #67A2DC 94.91%);
+}
+
+.text-shadow {
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}

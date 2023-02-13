@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "./static/css/main.css",
+    "main.js": "./static/js/main.js",
+    "static/media/tinkoff.png": "./static/media/tinkoff.png",
+    "static/media/rus.png": "./static/media/rus.png",
+    "static/media/tinkoff.webp": "./static/media/tinkoff.webp",
+    "static/media/logo.png": "./static/media/logo.png",
+    "static/media/logo.webp": "./static/media/logo.webp",
+    "static/media/flag.png": "./static/media/flag.png",
+    "static/media/flag.webp": "./static/media/flag.webp",
+    "static/media/rus.webp": "./static/media/rus.webp",
+    "index.html": "./index.html"
+  },
+  "entrypoints": [
+    "static/css/main.css",
+    "static/js/main.js"
+  ]
+}

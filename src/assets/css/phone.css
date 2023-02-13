@@ -1,0 +1,12 @@
+.react-tel-input .selected-flag .arrow {
+    display: none;
+}
+.react-tel-input .flag-dropdown.open .selected-flag {
+    background: transparent;
+}
+.react-tel-input .selected-flag:hover, .react-tel-input .selected-flag:focus {
+    background-color: transparent!important;
+}
+.react-tel-input .country-list .country.highlight {
+    background-color: #4c2424;
+}
