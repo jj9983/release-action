@@ -1,0 +1,27 @@
+name: 'Gitea Release Action'
+description: 'A Gitea Action to manage Gitea release'
+inputs:
+  files:
+    description: 'The files needs to be uploaded'
+    required: true
+  title: 
+    description: 'The release title'
+    required: false
+  pre_release: 
+    description: "Whether it's a pre release"
+    required: false
+  draft: 
+    description: "Whether it's a draft"
+    required: false
+  api_key:
+    description: 'The access token to interact with Gitea'
+    required: false
+  insecure:
+    description: 'Whether allow insecure Gitea instance'
+    required: false
+outputs:
+  status:
+    description: 'The upload status'
+runs:
+  using: 'go'
+  main: 'main.go'
