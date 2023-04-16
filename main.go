@@ -58,6 +58,7 @@ func main() {
 		IsDraft:      draft,
 		IsPrerelease: preRelease,
 		Title:        title,
+		Target:       ctx.SHA,
 		// Note:         rc.Note,
 	})
 	if err != nil {
