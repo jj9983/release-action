@@ -132,11 +132,14 @@ func getFiles(parentDir, files string) ([]string, error) {
 
 func createOrGetRelease(ctx *gha.GitHubContext, c *gitea.Client, owner, repo string, opts gitea.CreateReleaseOption) (*gitea.Release, error) {
 	// Get the release by tag
-	release, _, err := c.GetReleaseByTag(owner, repo, opts.TagName)
+	release, resp, err := c.GetReleaseByTag(owner, repo, opts.TagName)
 	if err == nil {
 		return release, nil
 	}
 	errMessage := fmt.Errorf("failed to get release for tag: %s with error: %w", opts.TagName, err)
+	if resp.StatusCode != 404 {
+		return nil, errMessage
+	}
 	fmt.Printf("%s trying to create it", errMessage)
 	// Create the release
 	release, _, err = c.CreateRelease(owner, repo, opts)
