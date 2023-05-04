@@ -53,7 +53,7 @@ func main() {
 	owner := ctx.RepositoryOwner
 	repo := strings.Split(ctx.Repository, "/")[1]
 
-	rel, err := createRelease(ctx, c, owner, repo, gitea.CreateReleaseOption{
+	rel, err := createOrGetRelease(ctx, c, owner, repo, gitea.CreateReleaseOption{
 		TagName:      ctx.RefName,
 		IsDraft:      draft,
 		IsPrerelease: preRelease,
@@ -130,13 +130,19 @@ func getFiles(parentDir, files string) ([]string, error) {
 	return fileList, nil
 }
 
-func createRelease(ctx *gha.GitHubContext, c *gitea.Client, owner, repo string, opts gitea.CreateReleaseOption) (*gitea.Release, error) {
-	// Create the release
-	release, _, err := c.CreateRelease(owner, repo, opts)
-	if err != nil {
-		return nil, fmt.Errorf("failed to create release: %w", err)
+func createOrGetRelease(ctx *gha.GitHubContext, c *gitea.Client, owner, repo string, opts gitea.CreateReleaseOption) (*gitea.Release, error) {
+	// Get the release by tag
+	release, _, err := c.GetReleaseByTag(owner, repo, opts.TagName)
+	if err == nil {
+		return release, nil
 	}
-
+	errMessage := fmt.Errorf("failed to get release for tag: %s with error: %w", opts.TagName, err)
+	fmt.Printf("%s trying to create it", errMessage)
+	// Create the release
+	release, _, err = c.CreateRelease(owner, repo, opts)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create release: %w and %s", err, errMessage)
+	}
 	return release, nil
 }
 
