@@ -139,7 +139,7 @@ func createOrGetRelease(ctx *gha.GitHubContext, c *gitea.Client, owner, repo str
 	if resp.StatusCode != 404 {
 		return nil, errMessage
 	}
-	fmt.Printf("%s trying to create it", errMessage)
+	fmt.Printf("%s trying to create it\n", errMessage)
 	// Create the release
 	release, _, err = c.CreateRelease(owner, repo, opts)
 	if err != nil {
