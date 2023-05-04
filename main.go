@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"path"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -162,7 +161,7 @@ func uploadFiles(ctx *gha.GitHubContext, c *gitea.Client, owner, repo string, re
 		}
 
 		for _, attachment := range attachments {
-			if attachment.Name == path.Base(file) {
+			if attachment.Name == filepath.Base(file) {
 				if _, err := c.DeleteReleaseAttachment(owner, repo, releaseID, attachment.ID); err != nil {
 					f.Close()
 					return fmt.Errorf("failed to delete release attachment %s: %w", file, err)
@@ -172,7 +171,7 @@ func uploadFiles(ctx *gha.GitHubContext, c *gitea.Client, owner, repo string, re
 			}
 		}
 
-		if _, _, err = c.CreateReleaseAttachment(owner, repo, releaseID, f, path.Base(file)); err != nil {
+		if _, _, err = c.CreateReleaseAttachment(owner, repo, releaseID, f, filepath.Base(file)); err != nil {
 			f.Close()
 			return fmt.Errorf("failed to upload release attachment %s: %w", file, err)
 		}
