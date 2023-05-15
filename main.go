@@ -16,7 +16,7 @@ import (
 func main() {
 	ctx, err := gha.Context()
 	if err != nil {
-		gha.Fatalf("failed to get context: %w", err)
+		gha.Fatalf("failed to get context: %v", err)
 	}
 
 	if !strings.HasPrefix(ctx.Ref, "refs/tags/") {
@@ -61,7 +61,7 @@ func main() {
 		// Note:         rc.Note,
 	})
 	if err != nil {
-		gha.Fatalf("failed to create release: %w", err)
+		gha.Fatalf("failed to create release: %v", err)
 	}
 
 	matchedFiles, err := getFiles(ctx.Workspace, files)
@@ -70,7 +70,7 @@ func main() {
 	}
 
 	if err := uploadFiles(ctx, c, owner, repo, rel.ID, matchedFiles); err != nil {
-		gha.Fatalf("Failed to upload files: %w", err)
+		gha.Fatalf("Failed to upload files: %v", err)
 	}
 
 	gha.SetOutput("status", "success")
