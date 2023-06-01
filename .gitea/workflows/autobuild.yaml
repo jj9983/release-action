@@ -35,6 +35,7 @@ jobs:
         id: use-go-action
         uses: https://git.nullgravity.net/jake.jameson/release-action@main
         with:
+          token: ${{ secrets.TOKEN }}
           files: |-
             build.zip
           api_key: '${{secrets.RELEASE_TOKEN}}'
