@@ -36,8 +36,15 @@ jobs:
           recursive: false
           dest: build.zip
           
-      - run: echo "token ${{ secrets.TOKE }}"
-      
+      - name: setup go
+        uses: https://github.com/actions/setup-go@v4
+        with:
+          go-version: '>=1.20.1'
+      # - name: go build
+        # run: go build -o bin/myapp
+      # - name: Use Go Action  
+        # id: use-go-action
+        
       - name: Upload binaries to release
         #uses: https://github.com/svenstaro/upload-release-action@v2
         uses: actions/release-action@main
