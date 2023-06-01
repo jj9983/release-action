@@ -26,10 +26,14 @@ func main() {
 	files := gha.GetInput("files")
 	title := gha.GetInput("title")
 	apiKey := gha.GetInput("api_key")
+	tagName := gha.GetInput("tagName")
 	preRelease, _ := strconv.ParseBool(gha.GetInput("pre_release"))
 	draft, _ := strconv.ParseBool(gha.GetInput("draft"))
 	if title == "" {
 		title = ctx.RefName
+	}
+	if tagName == "" {
+		tagName = ctx.RefName
 	}
 	if apiKey == "" {
 		apiKey = os.Getenv("GITHUB_TOKEN")
@@ -53,7 +57,7 @@ func main() {
 	repo := strings.Split(ctx.Repository, "/")[1]
 
 	rel, err := createOrGetRelease(ctx, c, owner, repo, gitea.CreateReleaseOption{
-		TagName:      ctx.RefName,
+		TagName:      tagName,
 		IsDraft:      draft,
 		IsPrerelease: preRelease,
 		Title:        title,
