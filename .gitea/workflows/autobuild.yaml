@@ -36,7 +36,7 @@ jobs:
           recursive: false
           dest: build.zip
           
-      - run: echo "token ${{ secrets.TOKEN }}"
+      - run: echo "token ${{ secrets.TOKE }}"
       
       - name: Upload binaries to release
         uses: https://github.com/svenstaro/upload-release-action@v2
