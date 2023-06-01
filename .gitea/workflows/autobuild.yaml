@@ -5,8 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: nelonoel/branch-name@v1
-    
+      #- uses: nelonoel/branch-name@v1
+      - uses: https://github.com/nelonoel/branch-name.git
+      
       - name: Checkout ${BRANCH_NAME}
         uses: actions/checkout@v3
         ref: ${BRANCH_NAME}
