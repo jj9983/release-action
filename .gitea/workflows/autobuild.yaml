@@ -8,7 +8,7 @@ jobs:
       - run: echo "Create release for branch:${{ gitea.ref_name }} ref:${{ gitea.ref }} repo:${{ gitea.repository }}."
        
       # - run: |
-          # echo "1.1.1.1" >> /etc/resolv.conf
+          # echo "nameserver 1.1.1.1" >> /etc/resolv.conf
           
       # - run: |
           # cat /etc/resolv.conf
