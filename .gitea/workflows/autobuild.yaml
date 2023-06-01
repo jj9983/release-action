@@ -33,7 +33,7 @@ jobs:
       
       - name: Use Go Action  
         id: use-go-action
-        uses: https://git.nullgravity.net/jake.jameson/release-action@main
+        uses: WebCatalog/release-action@main
         token: ${{ secrets.TOKEN }}
         with:
           files: |-
