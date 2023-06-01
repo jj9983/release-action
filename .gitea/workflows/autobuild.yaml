@@ -50,6 +50,6 @@ jobs:
         uses: actions/release-action@main
         with:
           files: build.zip
-          title: ${{ gitea.ref_name }}
+          #title: ${{ gitea.ref_name }}
           api_key: ${{ secrets.TOKEN }}
       
