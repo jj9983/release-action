@@ -6,22 +6,24 @@ jobs:
     
     steps:
       #- uses: nelonoel/branch-name@v1
-      - uses: Actions/branch-name@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      #- uses: Actions/branch-name@v1
+      - uses: https://github.com/nelonoel/branch-name@v1
+        # with:
+          # repo-token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Checkout ${BRANCH_NAME}
-        uses: actions/checkout@v3
+        uses: https://github.com/actions/checkout@v3
+        #uses: actions/checkout@v3
         ref: ${BRANCH_NAME}
         
       - name: Create build.zip
-        uses: vimtor/action-zip@v1
+        uses: https://github.com/vimtor/action-zip@v1
         with:
           files: build/*
           dest: build.zip
       
       - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
+        uses: https://github.com/svenstaro/upload-release-action@v2
         with:
           file: build.zip
           asset_name: ${BRANCH_NAME}.zip
