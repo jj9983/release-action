@@ -5,16 +5,30 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - run: echo "The job was automatically triggered by a ${{ gitea.event_name }} event."
+      - run: echo "This job is now running on a ${{ runner.os }} server hosted by Gitea!"
+      - run: echo "The name of your branch is ${{ gitea.ref }} and your repository is ${{ gitea.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "The ${{ gitea.repository }} repository has been cloned to the runner."
+      - run: echo "The workflow is now ready to test your code on the runner."
+       
+      - run: echo "This job's status is ${{ gitea.status }}."
       #- uses: nelonoel/branch-name@v1
       #- uses: Actions/branch-name@v1
-      - uses: https://github.com/nelonoel/branch-name@v1
+      - name: Get branch-name repo
+        uses: https://github.com/nelonoel/branch-name@v1
         # with:
           # repo-token: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Checkout ${BRANCH_NAME}
-        uses: https://github.com/actions/checkout@v3
+      - name: Checkout branch
+        uses: https://github.com/actions/checkout@v2
         #uses: actions/checkout@v3
         ref: ${BRANCH_NAME}
+        
+      - name: List files in the repository
+        run: |
+          ls ${{ gitea.workspace }}   
         
       - name: Create build.zip
         uses: https://github.com/vimtor/action-zip@v1
