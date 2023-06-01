@@ -7,11 +7,11 @@ jobs:
     steps:   
       - run: echo "Create release for branch:${{ gitea.ref_name }} ref:${{ gitea.ref }} repo:${{ gitea.repository }}."
        
-      - run: |
-          echo "1.1.1.1" >> /etc/resolv.conf
+      # - run: |
+          # echo "1.1.1.1" >> /etc/resolv.conf
           
-      - run: |
-          cat /etc/resolv.conf
+      # - run: |
+          # cat /etc/resolv.conf
       
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -43,4 +43,5 @@ jobs:
           asset_name: ${BRANCH_NAME}.zip
           tag: ${BRANCH_NAME}
           overwrite: true
+          repo_token: ${{ secrets.TOKEN }}
       
