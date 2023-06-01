@@ -9,9 +9,6 @@ jobs:
        
       - run: |
           cat /etc/resolv.conf
-          
-      - run: |
-          curl https://git.nullgravity.net/WebCatalog/tinkoff
       
       - run: |
           ping git.nullgravity.net
