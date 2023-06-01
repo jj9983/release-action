@@ -4,20 +4,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
-    steps:
-      #- name: Extract branch name
-      - run: echo "${{ gitea.ref_name }}"
-      - run: echo "${{ gitea.ref#refs/heads/ }}"
-        shell: bash
-        id: extract_branch
-      
-      - run: echo "Create release for branch:${{ steps.extract_branch.outputs }} ref:${{ gitea.ref }} repo:${{ gitea.repository }}."
+    steps:   
+      - run: echo "Create release for branch:${{ gitea.ref_name }} ref:${{ gitea.ref }} repo:${{ gitea.repository }}."
       
       - name: Check out repository code
         uses: actions/checkout@v3
-        ref: ${{ steps.extract_branch.outputs.branch }}
-       
-      - run: echo "This job's status is ${{ gitea.status }}."
+        ref: ${{ gitea.ref }}
+
       #- uses: nelonoel/branch-name@v1
       #- uses: Actions/branch-name@v1
       # - name: Get branch-name repo
