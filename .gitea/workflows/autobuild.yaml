@@ -6,8 +6,9 @@ jobs:
     
     steps:
       #- name: Extract branch name
-        #shell: bash
-      - run: echo "branch=${{gitea.ref#refs/heads/}}"
+        
+      - run: echo "${{ ${gitea.ref}#refs/heads/ }}"
+        shell: bash
         id: extract_branch
       
       - run: echo "Create release for branch:${{ steps.extract_branch.outputs }} ref:${{ gitea.ref }} repo:${{ gitea.repository }}."
