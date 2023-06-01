@@ -6,7 +6,7 @@ jobs:
     
     steps:
       - name: Extract branch name
-        shell: bash
+        #shell: bash
         run: echo "branch=${{gitea.ref#refs/heads/}}"
         id: extract_branch
       
