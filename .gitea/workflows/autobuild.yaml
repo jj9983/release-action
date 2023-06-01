@@ -5,12 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Extract branch name
+      #- name: Extract branch name
         #shell: bash
-        run: echo "branch=${{gitea.ref#refs/heads/}}"
+      - run: echo "branch=${{gitea.ref#refs/heads/}}"
         id: extract_branch
       
-      - run: echo "Create release for branch:${{ steps.extract_branch.outputs.branch }} ref:${{ gitea.ref }} repo:${{ gitea.repository }}."
+      - run: echo "Create release for branch:${{ steps.extract_branch.outputs }} ref:${{ gitea.ref }} repo:${{ gitea.repository }}."
       
       - name: Check out repository code
         uses: actions/checkout@v3
