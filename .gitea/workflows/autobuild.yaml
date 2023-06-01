@@ -15,8 +15,8 @@ jobs:
       
       - name: Check out repository code
         uses: actions/checkout@v3
-        token: ${{ secrets.TOKEN }}
-        ref: ${{ gitea.ref_name }}
+        #token: ${{ secrets.TOKEN }}
+        #ref: ${{ gitea.ref_name }}
 
       #- uses: nelonoel/branch-name@v1
       #- uses: Actions/branch-name@v1
