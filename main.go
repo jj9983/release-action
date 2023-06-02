@@ -129,7 +129,14 @@ func getFiles(parentDir, files string) ([]string, error) {
 func createOrGetRelease(ctx *gha.GitHubContext, c *gitea.Client, owner, repo string, opts gitea.CreateReleaseOption) (*gitea.Release, error) {
 	if !strings.HasPrefix(opts.TagName, "refs/tags/") {
 	  fmt.Errorf("looks like not a tag: %s, create new one by branch name: %s", opts.TagName, ctx.RefName)
-    tag, _, err = c.CreateTag(owner, repo, ctx.RefName)
+    
+    tagOpts := gitea.CreateTagOption {
+      TagName: ctx.RefName,
+	    //Message: string `json:"message"`
+	    Target:  ctx.RefName
+    }
+    
+    tag, _, err := c.CreateTag(owner, repo, ctx.RefName)
     opts.TagName := tag
 	}
   
