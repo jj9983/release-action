@@ -19,7 +19,7 @@ func main() {
 	if err != nil {
 		gha.Fatalf("failed to get context: %v", err)
 	}
-
+  fmt.Printf("Ref %s\n", ctx.Ref)
 	if !strings.HasPrefix(ctx.Ref, "refs/tags/") {
 		gha.Fatalf("ref %s is not a tag", ctx.Ref)
 	}
