@@ -13,6 +13,8 @@ import (
 	gha "github.com/sethvargo/go-githubactions"
 )
 
+fmt.Printf("debug message")
+
 func main() {
 	ctx, err := gha.Context()
 	if err != nil {
