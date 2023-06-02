@@ -29,6 +29,9 @@ func main() {
 	tagName := gha.GetInput("tagName")
 	preRelease, _ := strconv.ParseBool(gha.GetInput("pre_release"))
 	draft, _ := strconv.ParseBool(gha.GetInput("draft"))
+  
+  gha.Infof("received tagName: %s", tagName)
+  
 	if title == "" {
 		title = ctx.RefName
 	}
