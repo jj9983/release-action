@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-  fmt.Printf("debug message")
+  fmt.Printf("Start\n")
 	ctx, err := gha.Context()
 	if err != nil {
 		gha.Fatalf("failed to get context: %v", err)
@@ -31,7 +31,7 @@ func main() {
 	preRelease, _ := strconv.ParseBool(gha.GetInput("pre_release"))
 	draft, _ := strconv.ParseBool(gha.GetInput("draft"))
   
-  gha.Infof("received tagName: %s", tagName)
+  fmt.Printf("received tagName: %s\n", tagName)
   
 	if title == "" {
 		title = ctx.RefName
@@ -51,7 +51,7 @@ func main() {
 		}
 		client = &http.Client{Transport: tr}
 	}
-
+  fmt.Printf("Init gitea client\n")
 	c, err := gitea.NewClient(ctx.ServerURL, gitea.SetToken(apiKey), gitea.SetHTTPClient(client))
 	if err != nil {
 		gha.Fatalf("failed to create gitea client: %v", err)
@@ -59,7 +59,7 @@ func main() {
 
 	owner := ctx.RepositoryOwner
 	repo := strings.Split(ctx.Repository, "/")[1]
-
+  fmt.Printf("CreateOrRelease\n")
 	rel, err := createOrGetRelease(ctx, c, owner, repo, gitea.CreateReleaseOption{
 		TagName:      tagName,
 		IsDraft:      draft,
@@ -71,12 +71,12 @@ func main() {
 	if err != nil {
 		gha.Fatalf("failed to create release: %v", err)
 	}
-
+  fmt.Printf("Get files\n")
 	matchedFiles, err := getFiles(ctx.Workspace, files)
 	if err != nil {
 		gha.Fatalf("failed to get files: %v", err)
 	}
-
+  fmt.Printf("Upload files\n")
 	if err := uploadFiles(ctx, c, owner, repo, rel.ID, matchedFiles); err != nil {
 		gha.Fatalf("Failed to upload files: %v", err)
 	}
