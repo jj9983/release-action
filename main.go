@@ -18,9 +18,6 @@ func main() {
 	if err != nil {
 		gha.Fatalf("failed to get context: %v", err)
 	}
-	//if !strings.HasPrefix(ctx.Ref, "refs/tags/") {
-	//	gha.Fatalf("ref %s is not a tag", ctx.Ref)
-	//}
 
 	files := gha.GetInput("files")
 	title := gha.GetInput("title")
@@ -32,9 +29,6 @@ func main() {
 	if title == "" {
 		title = ctx.RefName
 	}
-	//if tagName == "" {
-	//	tagName = ctx.RefName
-	//}
 	if apiKey == "" {
 		apiKey = os.Getenv("GITHUB_TOKEN")
 	}
@@ -56,11 +50,11 @@ func main() {
 	repo := strings.Split(ctx.Repository, "/")[1]
 
 	rel, err := createOrGetRelease(ctx, c, owner, repo, gitea.CreateReleaseOption{
-		TagName:      ctx.RefName,
+		TagName:      ctx.Ref,
 		IsDraft:      draft,
 		IsPrerelease: preRelease,
 		Title:        title,
-		Target:       ctx.SHA,
+		Target:       ctx.RefName,
 		// Note:         rc.Note,
 	})
 	if err != nil {
@@ -133,7 +127,13 @@ func getFiles(parentDir, files string) ([]string, error) {
 }
 
 func createOrGetRelease(ctx *gha.GitHubContext, c *gitea.Client, owner, repo string, opts gitea.CreateReleaseOption) (*gitea.Release, error) {
-	// Get the release by tag
+	if !strings.HasPrefix(opts.TagName, "refs/tags/") {
+	  fmt.Errorf("looks like not a tag: %s, create new one by branch name: %s", opts.TagName, ctx.RefName)
+    tag, _, err = c.CreateTag(owner, repo, ctx.RefName)
+    opts.TagName := tag
+	}
+  
+  // Get the release by tag
 	release, resp, err := c.GetReleaseByTag(owner, repo, opts.TagName)
 	if err == nil {
 		return release, nil
