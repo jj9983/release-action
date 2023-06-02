@@ -14,31 +14,27 @@ import (
 )
 
 func main() {
-  fmt.Printf("Start\n")
 	ctx, err := gha.Context()
 	if err != nil {
 		gha.Fatalf("failed to get context: %v", err)
 	}
-  fmt.Printf("Ref %s\n", ctx.Ref)
-	if !strings.HasPrefix(ctx.Ref, "refs/tags/") {
-		gha.Fatalf("ref %s is not a tag", ctx.Ref)
-	}
+	//if !strings.HasPrefix(ctx.Ref, "refs/tags/") {
+	//	gha.Fatalf("ref %s is not a tag", ctx.Ref)
+	//}
 
 	files := gha.GetInput("files")
 	title := gha.GetInput("title")
 	apiKey := gha.GetInput("api_key")
-	tagName := gha.GetInput("tagName")
+	//tagName := gha.GetInput("tagName")
 	preRelease, _ := strconv.ParseBool(gha.GetInput("pre_release"))
 	draft, _ := strconv.ParseBool(gha.GetInput("draft"))
-  
-  fmt.Printf("received tagName: %s\n", tagName)
   
 	if title == "" {
 		title = ctx.RefName
 	}
-	if tagName == "" {
-		tagName = ctx.RefName
-	}
+	//if tagName == "" {
+	//	tagName = ctx.RefName
+	//}
 	if apiKey == "" {
 		apiKey = os.Getenv("GITHUB_TOKEN")
 	}
@@ -51,7 +47,6 @@ func main() {
 		}
 		client = &http.Client{Transport: tr}
 	}
-  fmt.Printf("Init gitea client\n")
 	c, err := gitea.NewClient(ctx.ServerURL, gitea.SetToken(apiKey), gitea.SetHTTPClient(client))
 	if err != nil {
 		gha.Fatalf("failed to create gitea client: %v", err)
@@ -59,9 +54,9 @@ func main() {
 
 	owner := ctx.RepositoryOwner
 	repo := strings.Split(ctx.Repository, "/")[1]
-  fmt.Printf("CreateOrRelease\n")
+
 	rel, err := createOrGetRelease(ctx, c, owner, repo, gitea.CreateReleaseOption{
-		TagName:      tagName,
+		TagName:      ctx.RefName,
 		IsDraft:      draft,
 		IsPrerelease: preRelease,
 		Title:        title,
@@ -71,12 +66,12 @@ func main() {
 	if err != nil {
 		gha.Fatalf("failed to create release: %v", err)
 	}
-  fmt.Printf("Get files\n")
+
 	matchedFiles, err := getFiles(ctx.Workspace, files)
 	if err != nil {
 		gha.Fatalf("failed to get files: %v", err)
 	}
-  fmt.Printf("Upload files\n")
+
 	if err := uploadFiles(ctx, c, owner, repo, rel.ID, matchedFiles); err != nil {
 		gha.Fatalf("Failed to upload files: %v", err)
 	}
