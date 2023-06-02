@@ -13,9 +13,8 @@ import (
 	gha "github.com/sethvargo/go-githubactions"
 )
 
-fmt.Printf("debug message")
-
 func main() {
+  fmt.Printf("debug message")
 	ctx, err := gha.Context()
 	if err != nil {
 		gha.Fatalf("failed to get context: %v", err)
